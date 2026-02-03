@@ -13,9 +13,9 @@ const FrontLayout = () => {
   const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
-    // Check if screen is mobile (below md breakpoint: 768px)
+    // Check if screen is mobile (below md breakpoint: 992px)
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768)
+      setIsMobile(window.innerWidth < 992)
     }
 
     checkMobile()
