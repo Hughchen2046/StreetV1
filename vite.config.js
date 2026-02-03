@@ -6,6 +6,7 @@ process.env.BROWSER = 'chrome'
 
 // https://vite.dev/config/
 export default defineConfig({
+  base: '/StreetV1/',
   plugins: [
     react({
       babel: {
