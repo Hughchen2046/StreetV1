@@ -1,0 +1,379 @@
+:root {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin: 0;
+    padding: 0;
+  }
+}
+
+html::-webkit-scrollbar {
+  width: 5px;
+  background-color: #ffffff;
+}
+
+html::-webkit-scrollbar-thumb {
+  background-color: #47c8b4;
+  border-radius: 8px;
+}
+
+// 1. Spacing (Extending Bootstrap spacers)
+$custom-spacers: (
+  0: 0px,
+  4: 4px,
+  8: 8px,
+  10: 10px,
+  12: 12px,
+  16: 16px,
+  20: 20px,
+  24: 24px,
+  32: 32px,
+  40: 40px,
+  48: 48px,
+  56: 56px,
+  64: 64px,
+  72: 72px,
+  80: 80px,
+  96: 96px,
+  100: 100px,
+  120: 120px,
+  140: 140px, // Added some variety
+) !default;
+
+// 2. 自訂 Colors
+$black: #121212 !default;
+$white: #ffffff !default;
+$primary: rgba(223, 49, 107, 1) !default;
+$green: #56b77e !default;
+$red: #f2735b !default;
+$pink: rgba(255, 0, 0, 0.1) !default;
+$pinkgreen: rgba(26, 162, 26, 0.1) !default;
+$bgc: #fafafa !default;
+
+@import 'bootstrap/scss/functions';
+@import 'bootstrap/scss/variables';
+@import 'bootstrap/scss/maps';
+@import 'bootstrap/scss/mixins';
+@import 'bootstrap/scss/utilities';
+
+$design-colors: (
+  'primary-100': #88bdb2,
+  'primary-200': #64a195,
+  'primary-300': rgba($primary, 0.2),
+  'primary-400': rgba($primary, 0.4),
+  'primary-500': rgba($primary, 0.6),
+  'primary-600': rgba($primary, 0.8),
+  'primary-700': $primary,
+  'primary-900': rgba(168, 0, 57, 1),
+  'gray-50': rgba(#ffffff, 0.3),
+  'gray-100': rgba(#ffffff, 0.5),
+  'gray-200': rgba(#ffffff, 0.7),
+  'gray-300': #ffffff,
+  'gray-400': rgba(#121212, 0.03),
+  'gray-500': rgba(#121212, 0.08),
+  'gray-600': rgba(#121212, 0.15),
+  'gray-700': rgba(#121212, 0.3),
+  'gray-800': rgba(#121212, 0.6),
+  'gray-900': #121212,
+  'bgc': $bgc,
+  'pink': $pink,
+  'pinkgreen': $pinkgreen,
+);
+
+@each $name, $col in $design-colors {
+  .text-#{$name} {
+    color: $col !important;
+  }
+
+  .bg-#{$name} {
+    background-color: $col !important;
+  }
+
+  .border-#{$name} {
+    border-color: $col !important;
+  }
+
+  .placeholder-#{$name} {
+    &::placeholder {
+      color: $col !important;
+      opacity: 1;
+    }
+  }
+}
+
+// 3. Typography
+.font-zh-tw {
+  font-family:
+    'Noto Sans TC',
+    'PingFang TC',
+    'Microsoft JhengHei',
+    system-ui,
+    -apple-system,
+    sans-serif !important;
+}
+
+.hd-title {
+  font-weight: 700;
+  line-height: 1.2;
+
+  @media (min-width: 992px) {
+    font-size: 3.5rem;
+  }
+
+  @media (max-width: 991px) {
+    font-size: 2.5rem;
+  }
+}
+
+// Custom Font Sizes Map
+$header-sizes: (
+  'display-1': 80px,
+  'display-2': 48px,
+  'h1': 40px,
+  'h2': 32px,
+  'h3': 28px,
+  'h4': 24px,
+  'h5': 20px,
+  'h6': 16px,
+  'fs-18': 18px,
+  'fs-16': 16px,
+  'fs-14': 14px,
+  'fs-12': 12px,
+  'fs-10': 10px,
+);
+
+.display-1,
+.display-2 {
+  font-weight: 900;
+  line-height: 1.2;
+}
+.fw-bold {
+  font-weight: 700 !important;
+}
+.fw-light {
+  font-weight: 400 !important;
+}
+
+.transition-all {
+  transition: all 0.3s ease-in-out !important;
+}
+
+// base tag styles
+h1 {
+  font-size: map-get($header-sizes, 'h1') !important;
+}
+h2 {
+  font-size: map-get($header-sizes, 'h2') !important;
+}
+h3 {
+  font-size: map-get($header-sizes, 'h3') !important;
+}
+h4 {
+  font-size: map-get($header-sizes, 'h4') !important;
+}
+h5 {
+  font-size: map-get($header-sizes, 'h5') !important;
+}
+h6 {
+  font-size: map-get($header-sizes, 'h6') !important;
+}
+.fs-10 {
+  font-size: map-get($header-sizes, 'fs-10') !important;
+}
+.fs-12 {
+  font-size: map-get($header-sizes, 'fs-12') !important;
+}
+.fs-14 {
+  font-size: map-get($header-sizes, 'fs-14') !important;
+}
+.fs-16 {
+  font-size: map-get($header-sizes, 'fs-16') !important;
+}
+.fs-18 {
+  font-size: map-get($header-sizes, 'fs-18') !important;
+}
+
+// Generate responsive typography classes
+@each $breakpoint in map-keys($grid-breakpoints) {
+  @include media-breakpoint-up($breakpoint) {
+    $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+
+    @each $name, $size in $header-sizes {
+      .#{$name}#{$infix} {
+        font-size: $size !important;
+      }
+    }
+  }
+}
+
+// Additional Border helpers
+.border-solid {
+  border-style: solid !important;
+}
+
+// 4. 自定義圓角尺寸
+$utilities: map-merge(
+  $utilities,
+  (
+    'custom-radius': (
+      property: border-radius,
+      responsive: true,
+      // 設為 true 才會產生 -sm, -md, -lg, -xl 等後綴
+      class: round,
+      // 產出的 class 前綴，例如 .round-8
+      values: (
+          '0': 0px,
+          '4': 4px,
+          '8': 8px,
+          '12': 12px,
+          '24': 24px,
+          '36': 36px,
+          '48': 48px,
+          '96': 96px,
+          'pill': 999px,
+        ),
+    ),
+  )
+);
+
+@import 'bootstrap/scss/utilities/api';
+
+// Loop removed and moved to all.scss to ensure priority over Bootstrap
+
+// 5. Components
+// Button Outline with Arrow Hover
+
+// 5. 導入 Bootstrap 本體 (會根據上方已定義的變數複寫其預設值)
+@import 'bootstrap/scss/bootstrap';
+
+// 6. 最終樣式生成 (放在最後以確保擁有最高優先級)
+.fs-10 {
+  font-size: 10px !important;
+}
+.fs-12 {
+  font-size: 12px !important;
+}
+.fs-14 {
+  font-size: 14px !important;
+}
+.fs-16 {
+  font-size: 16px !important;
+}
+.fs-18 {
+  font-size: 18px !important;
+}
+
+@each $breakpoint in map-keys($grid-breakpoints) {
+  @include media-breakpoint-up($breakpoint) {
+    $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+
+    @each $i, $v in $custom-spacers {
+      // 間距與 Gap 覆蓋
+      .m#{$infix}-#{$i} {
+        margin: $v !important;
+      }
+      .mt#{$infix}-#{$i} {
+        margin-top: $v !important;
+      }
+      .mb#{$infix}-#{$i} {
+        margin-bottom: $v !important;
+      }
+      .ms#{$infix}-#{$i} {
+        margin-left: $v !important;
+      }
+      .me#{$infix}-#{$i} {
+        margin-right: $v !important;
+      }
+      .my#{$infix}-#{$i} {
+        margin-top: $v !important;
+        margin-bottom: $v !important;
+      }
+      .mx#{$infix}-#{$i} {
+        margin-left: $v !important;
+        margin-right: $v !important;
+      }
+
+      .p#{$infix}-#{$i} {
+        padding: $v !important;
+      }
+      .pt#{$infix}-#{$i} {
+        padding-top: $v !important;
+      }
+      .pb#{$infix}-#{$i} {
+        padding-bottom: $v !important;
+      }
+      .ps#{$infix}-#{$i} {
+        padding-left: $v !important;
+      }
+      .pe#{$infix}-#{$i} {
+        padding-right: $v !important;
+      }
+      .py#{$infix}-#{$i} {
+        padding-top: $v !important;
+        padding-bottom: $v !important;
+      }
+      .px#{$infix}-#{$i} {
+        padding-left: $v !important;
+        padding-right: $v !important;
+      }
+
+      .gap#{$infix}-#{$i} {
+        gap: $v !important;
+      }
+      .row-gap#{$infix}-#{$i} {
+        row-gap: $v !important;
+      }
+      .column-gap#{$infix}-#{$i} {
+        column-gap: $v !important;
+      }
+
+      .round-top#{$infix}-#{$i} {
+        border-top-left-radius: $v !important;
+        border-top-right-radius: $v !important;
+      }
+
+      // 響應式文字大小 (例如 .fs-14-md)
+      @each $name, $size in $header-sizes {
+        .#{$name}#{$infix} {
+          font-size: $size !important;
+        }
+      }
+    }
+
+    // 響應式邊框
+    .border#{$infix} {
+      border: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color) !important;
+    }
+    .border-top#{$infix} {
+      border-top: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color) !important;
+    }
+    .border-bottom#{$infix} {
+      border-bottom: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color) !important;
+    }
+    .border-start#{$infix} {
+      border-left: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color) !important;
+    }
+    .border-end#{$infix} {
+      border-right: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color) !important;
+    }
+
+    .border#{$infix}-0 {
+      border: 0 !important;
+    }
+    .border-top#{$infix}-0 {
+      border-top: 0 !important;
+    }
+    .border-bottom#{$infix}-0 {
+      border-bottom: 0 !important;
+    }
+    .border-start#{$infix}-0 {
+      border-left: 0 !important;
+    }
+    .border-end#{$infix}-0 {
+      border-right: 0 !important;
+    }
+  }
+}
