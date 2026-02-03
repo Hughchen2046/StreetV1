@@ -10,10 +10,20 @@ const FrontLayout = () => {
   const navToggle = useRef(null)
   const [isScrolled, setIsScrolled] = useState(false)
   const [isLogoVfVisible, setIsLogoVfVisible] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
+    // Check if screen is mobile (below md breakpoint: 768px)
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+
     const handleScroll = () => {
-      if (window.scrollY > 20) {
+      // Only apply scroll effects on desktop
+      if (!isMobile && window.scrollY > 20) {
         setIsScrolled(true)
       } else {
         setIsScrolled(false)
@@ -22,8 +32,11 @@ const FrontLayout = () => {
     }
 
     window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+      window.removeEventListener('resize', checkMobile)
+    }
+  }, [isMobile])
 
   const handleNavToggle = () => {
     navMenu.current = new Offcanvas(navToggle.current, {
@@ -40,18 +53,21 @@ const FrontLayout = () => {
         <div className="container-fluid position-relative">
           <Link
             className={`navbar-brand text-primary-700 position-absolute top-0 start-0 z-2 ${
-              isLogoVfVisible ? 'd-none' : 'd-block'
+              isMobile ? 'd-none' : isLogoVfVisible ? 'd-none' : 'd-block'
             }`}
             to="/"
             style={{
-              transition: 'transform 0.5s ease-in-out, opacity 0.3s',
-              transform: isScrolled
-                ? 'translateY(0%) translateX(0%)'
-                : 'translateY(20%) translateX(30%)',
-              opacity: isScrolled && !isLogoVfVisible ? 0.8 : 1,
+              transition: isMobile ? 'none' : 'transform 0.5s ease-in-out, opacity 0.3s',
+              transform: isMobile
+                ? 'none'
+                : isScrolled
+                  ? 'translateY(0%) translateX(0%)'
+                  : 'translateY(20%) translateX(30%)',
+              opacity: isMobile ? 1 : isScrolled && !isLogoVfVisible ? 0.8 : 1,
             }}
             onTransitionEnd={(e) => {
-              if (e.propertyName === 'transform' && isScrolled) setIsLogoVfVisible(true)
+              if (!isMobile && e.propertyName === 'transform' && isScrolled)
+                setIsLogoVfVisible(true)
             }}
           >
             <img className="w-100" src={LogoF} alt="Logo" />
@@ -63,9 +79,13 @@ const FrontLayout = () => {
               alt="Logo"
               style={{
                 height: '80px',
-                opacity: isLogoVfVisible ? 1 : 0,
-                visibility: isLogoVfVisible ? 'visible' : 'hidden',
-                transition: isLogoVfVisible ? 'opacity 0.3s ease-in-out' : 'none',
+                opacity: isMobile ? 1 : isLogoVfVisible ? 1 : 0,
+                visibility: isMobile ? 'visible' : isLogoVfVisible ? 'visible' : 'hidden',
+                transition: isMobile
+                  ? 'none'
+                  : isLogoVfVisible
+                    ? 'opacity 0.3s ease-in-out'
+                    : 'none',
               }}
             />
           </Link>
@@ -97,7 +117,7 @@ const FrontLayout = () => {
                 <Balloon className="iconHover" /> <span className="fs-10 fs-14-md">派對時光</span>
               </Link>
             </li>
-            <li>
+            <li className="d-none d-md-block">
               <Link
                 className="bg-primary-700 p-4 px-auto py-auto border-start-md nav-top text-white border-0 d-flex flex-column align-items-center justify-content-center gap-8 gap-lg-12  text-decoration-none"
                 to="/about"
