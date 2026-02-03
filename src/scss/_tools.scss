@@ -7,3 +7,26 @@
     }
   }
 }
+.z-index-99 {
+  z-index: 99;
+}
+
+/* 只針對 top-mv 的 swiper，避免影響其他地方 */
+.top-mv .swiper {
+  width: 100%;
+}
+
+/* fade 模式有時會讓 slide 的 pointer-events 出問題，保險 */
+.top-mv .swiper-slide {
+  height: auto;
+}
+
+/* 圖片撐滿，避免底下出現奇怪空隙 */
+.top-mv__img img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.top-mv .slick-arrow {
+  z-index: 6;
+}

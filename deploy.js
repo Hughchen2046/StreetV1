@@ -31,11 +31,15 @@ console.log('=== GitHub Pages Deployment ===\n');
 
 // Step 1: 清除 gh-pages 緩存
 console.log('[1/6] Clearing gh-pages cache...');
-if (fs.existsSync(cachePath)) {
-    fs.rmSync(cachePath, { recursive: true, force: true });
-    console.log('      Cache cleared.\n');
-} else {
-    console.log('      No cache found.\n');
+try {
+    if (fs.existsSync(cachePath)) {
+        fs.rmSync(cachePath, { recursive: true, force: true });
+        console.log('      Cache cleared.\n');
+    } else {
+        console.log('      No cache found.\n');
+    }
+} catch (e) {
+    console.log('      Warning: Could not clear cache (may be locked).\n');
 }
 
 // Step 2: 刪除遠端 gh-pages 分支
@@ -50,11 +54,15 @@ console.log('      Done.\n');
 
 // Step 4: 刪除 dist 目錄
 console.log('[4/6] Cleaning dist directory...');
-if (fs.existsSync(distPath)) {
-    fs.rmSync(distPath, { recursive: true, force: true });
-    console.log('      dist removed.\n');
-} else {
-    console.log('      dist not found.\n');
+try {
+    if (fs.existsSync(distPath)) {
+        fs.rmSync(distPath, { recursive: true, force: true });
+        console.log('      dist removed.\n');
+    } else {
+        console.log('      dist not found.\n');
+    }
+} catch (e) {
+    console.log('      Warning: Could not remove dist (may be locked).\n');
 }
 
 // Step 5: Build
