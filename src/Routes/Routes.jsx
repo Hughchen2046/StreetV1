@@ -8,7 +8,7 @@ const routes = [
     element: <FrontLayout />,
     children: [
       {
-        path: 'home',
+        index: true,
         element: <Home />,
       },
       {
