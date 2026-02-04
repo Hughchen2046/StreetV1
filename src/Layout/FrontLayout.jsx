@@ -49,7 +49,7 @@ const FrontLayout = () => {
 
   return (
     <div>
-      <nav className="navbar p-0 position-fixed w-100 z-index-99 bg-white">
+      <nav className="navbar p-0 position-fixed w-100 z-index-99 bg-white-600">
         <div className="container-fluid position-relative">
           <Link
             className={`navbar-brand text-primary-700 position-absolute top-0 start-0 z-2 ${
@@ -78,7 +78,7 @@ const FrontLayout = () => {
               src={LogoVf2}
               alt="Logo"
               style={{
-                height: '72px',
+                height: '48px',
                 opacity: isMobile ? 1 : isLogoVfVisible ? 1 : 0,
                 visibility: isMobile ? 'visible' : isLogoVfVisible ? 'visible' : 'hidden',
                 transition: isMobile
@@ -130,7 +130,7 @@ const FrontLayout = () => {
             <button
               className="navbar-toggler p-4 px-md-12 py-md-8 border-0 d-flex flex-column align-items-center justify-content-center gap-4 gap-lg-8 border-start-md"
               type="button"
-              style={{ width: '80px', height: '80px' }}
+              style={{ width: '80px', height: '60px' }}
               onClick={handleNavToggle}
             >
               <Menu />

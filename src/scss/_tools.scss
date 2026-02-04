@@ -11,22 +11,29 @@
   z-index: 99;
 }
 
-/* 只針對 top-mv 的 swiper，避免影響其他地方 */
-.top-mv .swiper {
-  width: 100%;
+.swiper-wrapper {
+  transition-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1) !important;
 }
 
-/* fade 模式有時會讓 slide 的 pointer-events 出問題，保險 */
-.top-mv .swiper-slide {
-  height: auto;
+.mv-img {
+  aspect-ratio: 0.857/1;
+  object-fit: cover;
+  object-position: center;
 }
 
-/* 圖片撐滿，避免底下出現奇怪空隙 */
-.top-mv__img img {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-.top-mv .slick-arrow {
-  z-index: 6;
+// 粉紅色三角
+.triangle-corner {
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 20px;
+    height: 20px;
+    background: rgba($primary, 0.6); // 淡粉紅色
+    clip-path: polygon(100% 0, 0% 100%, 100% 100%);
+    z-index: 3;
+  }
 }
